@@ -5,12 +5,18 @@ $db = require(__DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic',
+    'language' => 'zh-CN',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
         'admin' => [
             'class' => 'mdm\admin\Module',
             'layout' => 'left-menu',
+            'controllerMap' => [
+                'user' => [
+                    'class' => 'mdm\admin\controllers\UserController',
+                ],
+            ],
         ],
     ],
     'components' => [
@@ -23,7 +29,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'mdm\admin\models\User',
-            'loginUrl' => ['admin/user/login'],
+            'loginUrl' => ['/admin/user/login'],
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -49,18 +55,6 @@ $config = [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
-        'as access' => [
-            'class' => 'mdm\admin\components\AccessControl',
-            'allowActions' => [
-                'site/*',
-                'admin/*',
-                // The actions listed here will be allowed to everyone including guests.
-                // So, 'admin/*' should not appear here in the production, of course.
-                // But in the earlier stages of your development, you may probably want to
-                // add a lot of actions here until you finally completed setting up rbac,
-                // otherwise you may not even take a first step.
-            ]
-        ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -69,6 +63,18 @@ $config = [
             ],
         ],
         */
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            //'site/*',
+            'admin/*',
+            // The actions listed here will be allowed to everyone including guests.
+            // So, 'admin/*' should not appear here in the production, of course.
+            // But in the earlier stages of your development, you may probably want to
+            // add a lot of actions here until you finally completed setting up rbac,
+            // otherwise you may not even take a first step.
+        ]
     ],
     'params' => $params,
 ];

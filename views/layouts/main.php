@@ -71,13 +71,20 @@ AppAsset::register($this);
                 ],
             ],
             [
-                'label' => "Hi, " . Yii::$app->user->identity->username,
+                'label' => Yii::$app->user->isGuest ? "请先登录" : "Hi, " . Yii::$app->user->identity->username,
                 'items' => [
                     ['label' => '个人信息', 'url' => '/'],
                     ['label' => '周报', 'url' => '/report'],
                     ['label' => '关于', 'url' => '/about'],
                     '<li class="divider"></li>',
-                    ['label' => '注销', 'url' => '/site/logout'],
+                    '<li>'
+                    . Html::beginForm(['/admin/user/logout'], 'post')
+                    . Html::submitButton(
+                        '注销',
+                        ['class' => 'btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>',
                 ],
             ],
         ],
